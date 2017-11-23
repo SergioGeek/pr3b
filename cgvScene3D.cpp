@@ -5,7 +5,7 @@
 
 // Constructor methods -----------------------------------
 
-cgvScene3D::cgvScene3D () {
+cgvScene3D::cgvScene3D () : angleX(0), angleY(0), angleZ(0){
 	axes = true;
 // Section B: initialize the attributes to control the degrees of freedom of the model
 
@@ -19,7 +19,14 @@ cgvScene3D::~cgvScene3D() {}
 
 // Public methods ----------------------------------------
 
+void cgvScene3D::rotateX(const float& angle) { this->angleX += angle; }
+
+void cgvScene3D::rotateY(const float& angle) { this->angleY += angle; }
+
+void cgvScene3D::rotateZ(const float& angle) { this->angleZ += angle; }
+
 void draw_axes(void) {
+
 	GLfloat red[]={1,0,0,1.0};
 	GLfloat green[]={0,1,0,1.0};
 	GLfloat blue[]={0,0,1,1.0};
@@ -39,6 +46,31 @@ void draw_axes(void) {
 	glEnd();
 }
 
+void draw_body ( void ) {
+
+	static GLUquadric* quad = gluNewQuadric();
+
+
+	glPushMatrix();
+		glTranslatef(-1.9,0,0);
+		glRotatef(90,0,1,0);
+		gluCylinder(quad, 0.7, 0.7, 3.75, 15, 15);
+	glPopMatrix();
+
+
+	glPushMatrix();
+		glTranslatef(-2,0,0);
+		glutSolidSphere(0.7,15,15);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(1.8,0,0);
+	glutSolidSphere(0.7,15,15);
+	glPopMatrix();
+	
+}
+
+
 
 void cgvScene3D::render(void) {
 
@@ -51,8 +83,14 @@ void cgvScene3D::render(void) {
 	// create the model
 	glPushMatrix(); // store the model matrices
 
+	glRotatef(this->angleX, 1, 0, 0);
+	glRotatef(this->angleY, 0, 1, 0);
+	glRotatef(this->angleZ, 0, 0, 1);
+
 	// draw the axes
-	if (axes) draw_axes();
+	//if (axes) draw_axes();
+
+	draw_body();
 
 	//glLightfv(GL_LIGHT0,GL_POSITION,light0); // the light is placed here and it moves with the scene
 	float mesh_color[4] = {1.0, 0.0, 0.0, 1.0};

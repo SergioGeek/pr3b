@@ -67,7 +67,26 @@ void cgvInterface::set_glutKeyboardFunc(unsigned char key, int x, int y) {
 			interface.scene.set_axes(interface.scene.get_axes()?false:true);
 
 			break;
-		case 27: // Escape key to exit
+
+        case 'x': // TODO: Section A: rotate positive X
+            interface.scene.rotateX(10);
+            break;
+        case 'X': // TODO: Section A: rotate negative X
+            interface.scene.rotateX(-10);
+            break;
+        case 'y': // TODO: Section A: rotate positive Y
+            interface.scene.rotateY(10);
+            break;
+        case 'Y': // TODO: Section A: rotate negative Y
+            interface.scene.rotateY(-10);
+            break;
+        case 'z': // TODO: Section A: rotate positive Z
+            interface.scene.rotateZ(10);
+            break;
+        case 'Z': // TODO: Section C: rotate negative Z
+            interface.scene.rotateZ(-10);
+            break;
+        case 27: // Escape key to exit
 			exit(1);
 			break;
 	}

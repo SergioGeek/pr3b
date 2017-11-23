@@ -12,6 +12,8 @@
 
 class cgvScene3D {
 protected:
+
+    float angleX, angleY, angleZ;
 ////// Section B: add here the attributes to control the degrees of freedom of the model
 
 
@@ -32,6 +34,12 @@ public:
 	// Methods
 	// method with the OpenGL calls to render the scene
 	void render();
+
+    void rotateX(const float& angle);
+
+    void rotateY(const float& angle);
+
+    void rotateZ(const float& angle);
 
 	////// Section B: include here the methods to modify the degrees of freedom of the model
 
