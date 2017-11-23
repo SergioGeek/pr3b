@@ -54,7 +54,7 @@ void draw_body ( void ) {
 	glPushMatrix();
 		glTranslatef(-1.9,0,0);
 		glRotatef(90,0,1,0);
-		gluCylinder(quad, 0.7, 0.7, 3.75, 15, 15);
+		gluCylinder(quad, 0.7, 0.7, 3.25, 15, 15);
 	glPopMatrix();
 
 
@@ -64,10 +64,91 @@ void draw_body ( void ) {
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(1.8,0,0);
-	glutSolidSphere(0.7,15,15);
+		glTranslatef(1.3,0,0);
+		glutSolidSphere(0.7,15,15);
 	glPopMatrix();
-	
+
+}
+
+void draw_head ( void ) {
+
+	static GLUquadric* quad = gluNewQuadric();
+
+
+
+	//Cabeza
+	glPushMatrix();
+		glTranslatef(2.1,1,0);
+		glutSolidSphere(0.75,15,15);
+	glPopMatrix();
+
+	//Morro
+	glPushMatrix();
+		glTranslatef(2.1,1,0);
+		glutSolidSphere(0.25,15,15);
+		glRotatef(90,0,1,0);
+		glRotatef(15,1,0,0);
+		gluCylinder(quad, 0.6, 0.15, 1.30, 15, 15);
+	glPopMatrix();
+
+
+	//Nariz
+	glPushMatrix();
+		glTranslatef(3.5,0.65,0);
+		glutSolidSphere(0.175,15,15);
+	glPopMatrix();
+
+	//Orejas
+	 glPushMatrix();
+		glTranslatef(2.1,-0.65,0.73);
+		glScalef(1,1,0.5);
+		glRotatef(270,1,0,0);
+		glutSolidCone(0.4,2,15,15);
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(2.1,-0.65,-0.73);
+		glScalef(1,1,0.5);
+		glRotatef(270,1,0,0);
+		glutSolidCone(0.4,2,15,15);
+	glPopMatrix();
+
+	//Ojo
+	glPushMatrix();
+		glTranslatef(2.75,1.2,-0.35);
+		glScalef(0.3,1,0.65);
+		glutSolidSphere(0.25,15,15);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(2.75,1.2,0.35);
+	glScalef(0.3,1,0.65);
+	glutSolidSphere(0.25,15,15);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(2.8,1.2,0.35);
+	glScalef(0.3,1,0.65);
+	glutSolidSphere(0.13,15,15);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(2.8,1.2,-0.35);
+	glScalef(0.3,1,0.65);
+	glutSolidSphere(0.13,15,15);
+	glPopMatrix();
+
+
+	//Patas
+
+
+
+
+
+
+
+
+
 }
 
 
@@ -90,7 +171,10 @@ void cgvScene3D::render(void) {
 	// draw the axes
 	//if (axes) draw_axes();
 
+	draw_head();
 	draw_body();
+
+
 
 	//glLightfv(GL_LIGHT0,GL_POSITION,light0); // the light is placed here and it moves with the scene
 	float mesh_color[4] = {1.0, 0.0, 0.0, 1.0};
