@@ -50,7 +50,6 @@ void draw_body ( void ) {
 
 	static GLUquadric* quad = gluNewQuadric();
 
-
 	glPushMatrix();
 		glTranslatef(-1.9,0,0);
 		glRotatef(90,0,1,0);
@@ -59,7 +58,7 @@ void draw_body ( void ) {
 
 
 	glPushMatrix();
-		glTranslatef(-2,0,0);
+		glTranslatef(-1.9,0,0);
 		glutSolidSphere(0.7,15,15);
 	glPopMatrix();
 
@@ -121,35 +120,101 @@ void draw_head ( void ) {
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(2.75,1.2,0.35);
-	glScalef(0.3,1,0.65);
-	glutSolidSphere(0.25,15,15);
+		glTranslatef(2.75,1.2,0.35);
+		glScalef(0.3,1,0.65);
+		glutSolidSphere(0.25,15,15);
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(2.8,1.2,0.35);
-	glScalef(0.3,1,0.65);
-	glutSolidSphere(0.13,15,15);
+		glTranslatef(2.8,1.2,0.35);
+		glScalef(0.3,1,0.65);
+		glutSolidSphere(0.13,15,15);
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(2.8,1.2,-0.35);
-	glScalef(0.3,1,0.65);
-	glutSolidSphere(0.13,15,15);
+		glTranslatef(2.8,1.2,-0.35);
+		glScalef(0.3,1,0.65);
+		glutSolidSphere(0.13,15,15);
 	glPopMatrix();
-
-
-	//Patas
-
-
-
-
-
-
-
 
 
 }
+
+
+void draw_legs ( void ) {
+
+	//Patas
+	//TD
+	glPushMatrix();
+		glTranslatef(-1.7,-1,0.67);
+		glScalef(1,1,0.5);
+		glRotatef(270,1,0,0);
+		glutSolidCone(0.25,1,15,15);
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(-1.6,-1.1,0.67);
+		glScalef(0.95,0.2,0.47);
+		glutSolidCube(1);
+	glPopMatrix();
+
+	//TI
+	glPushMatrix();
+		glTranslatef(-1.7,-1,-0.67);
+		glScalef(1,1,0.5);
+		glRotatef(270,1,0,0);
+		glutSolidCone(0.25,1,15,15);
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(-1.6,-1.1,-0.67);
+		glScalef(0.95,0.2,0.47);
+		glutSolidCube(1);
+	glPopMatrix();
+
+	//DD
+	glPushMatrix();
+		glTranslatef(1.3,-1,0.67);
+		glScalef(1,1,0.5);
+		glRotatef(270,1,0,0);
+		glutSolidCone(0.25,1,15,15);
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(1.4,-1.1,0.67);
+		glScalef(0.95,0.2,0.47);
+		glutSolidCube(1);
+	glPopMatrix();
+
+	//DI
+	glPushMatrix();
+		glTranslatef(1.3,-1,-0.67);
+		glScalef(1,1,0.5);
+		glRotatef(270,1,0,0);
+		glutSolidCone(0.25,1,15,15);
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(1.4,-1.1,-0.67);
+		glScalef(0.95,0.2,0.47);
+		glutSolidCube(1);
+	glPopMatrix();
+}
+
+
+void draw_tail ( void ) {
+
+	glPushMatrix();
+		glTranslatef(-2,0,0);
+		glRotatef(-90,0,1,0);
+		glRotatef(-30,1,0,0);
+		glutSolidCone(0.2,2.2,15,15);
+	glPopMatrix();
+
+
+}
+
+
 
 
 
@@ -173,6 +238,8 @@ void cgvScene3D::render(void) {
 
 	draw_head();
 	draw_body();
+	draw_legs();
+	draw_tail();
 
 
 
