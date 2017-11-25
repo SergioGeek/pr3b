@@ -15,7 +15,16 @@ protected:
 
     float angleX, angleY, angleZ;
 ////// Section B: add here the attributes to control the degrees of freedom of the model
+	//Tail
+	float RtailX, RtailY, RtailZ;
+	bool cambioTail;
 
+	//eyes
+	float TeyeX, TeyeY, TeyeZ;
+	bool cambioEye;
+
+	float TtongueX, TtongueY, TtongueZ;
+	bool cambioTongue;
 
 ////// Section D: add here the attribute/s to control the selected object and to color it yellow
 
@@ -42,7 +51,17 @@ public:
     void rotateZ(const float& angle);
 
 	////// Section B: include here the methods to modify the degrees of freedom of the model
+	void draw_body ( void );
+	void draw_head ( void );
+	void draw_legs ( void );
+	void draw_feet( void );
+	void draw_tail ( void );
+	void draw_tongue ( void );
 
+	void rotateTail ( float aux );
+	void rotateEyes ( float aux );
+	void rotateTongue (float aux );
+	void rotateAll( float auxTo, float auxTa, float auxE );
 
 	////// Section D: include here the method/s to indicate the selected object
 
