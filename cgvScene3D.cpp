@@ -27,6 +27,9 @@ cgvScene3D::cgvScene3D () : angleX(0), angleY(0), angleZ(0){
 
 // Section D: initialize the attribute/s that identifies the select object and to colour it yellow
 
+    for (int i = 0; i < 11; ++i)
+        this->changeColor[i] = false;
+
 }
 
 cgvScene3D::~cgvScene3D() {}
@@ -61,15 +64,21 @@ void draw_axes(void) {
 	glEnd();
 }
 
-void cgvScene3D::draw_body ( void ) {
+void cgvScene3D::draw_body ( bool color ) {
+
+    if (color) {
+        GLfloat amarillooscuro[]={0.5,0.5,0,1},
+                amarillosolido[]={1,1,0,1};
+        glMaterialfv(GL_FRONT,GL_EMISSION,amarillooscuro);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,amarillosolido);
+    } else {
+        GLfloat marronc[] = { 0.44,0.25,0.2,1 };
+
+        glMaterialfv(GL_FRONT,GL_EMISSION,marronc);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,marronc);
+    }
 
 	static GLUquadric* quad = gluNewQuadric();
-
-    GLfloat marronc[] = { 0.44,0.25,0.2,1 };
-
-    glMaterialfv(GL_FRONT,GL_EMISSION,marronc);
-    glMaterialfv(GL_FRONT,GL_DIFFUSE,marronc);
-
 
     glPushMatrix();
 		glTranslatef(-1.9,0,0);
@@ -90,15 +99,23 @@ void cgvScene3D::draw_body ( void ) {
 
 }
 
-void cgvScene3D::draw_head ( void ) {
+void cgvScene3D::draw_head ( bool color ) {
+
+    if (color) {
+        GLfloat amarillooscuro[]={0.5,0.5,0,1},
+                amarillosolido[]={1,1,0,1};
+        glMaterialfv(GL_FRONT,GL_EMISSION,amarillooscuro);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,amarillosolido);
+
+    } else {
+
+        GLfloat marrono[] = { 0.37,0.25,0.2,1 };
+
+        glMaterialfv(GL_FRONT,GL_EMISSION,marrono);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,marrono);
+    }
 
 	static GLUquadric* quad = gluNewQuadric();
-
-
-    GLfloat marrono[] = { 0.37,0.25,0.2,1 };
-
-    glMaterialfv(GL_FRONT,GL_EMISSION,marrono);
-    glMaterialfv(GL_FRONT,GL_DIFFUSE,marrono);
 
 	//Cabeza
 	glPushMatrix();
@@ -106,92 +123,176 @@ void cgvScene3D::draw_head ( void ) {
 		glutSolidSphere(0.75,15,15);
 	glPopMatrix();
 
-    GLfloat marronc[] = { 0.6,0.3,0.2,1 };
+}
 
-    glMaterialfv(GL_FRONT,GL_EMISSION,marronc);
-    glMaterialfv(GL_FRONT,GL_DIFFUSE,marronc);
+void cgvScene3D::draw_mouth( bool color ) {
 
-	//Morro
-	glPushMatrix();
-		glTranslatef(2.1,1,0);
-		glutSolidSphere(0.25,15,15);
-		glRotatef(90,0,1,0);
-		glRotatef(15,1,0,0);
-		gluCylinder(quad, 0.6, 0.15, 1.30, 15, 15);
-	glPopMatrix();
+    if (color) {
 
-    GLfloat rosa[] = { 0.824, 0.106, 0.325,1 };
+        GLfloat amarillooscuro[]={0.5,0.5,0,1},
+                amarillosolido[]={1,1,0,1};
+        glMaterialfv(GL_FRONT,GL_EMISSION,amarillooscuro);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,amarillosolido);
 
-    glMaterialfv(GL_FRONT,GL_EMISSION,rosa);
-    glMaterialfv(GL_FRONT,GL_DIFFUSE,marrono);
+    } else {
 
-	//Nariz
-	glPushMatrix();
-		glTranslatef(3.5,0.65,0);
-		glutSolidSphere(0.175,15,15);
-	glPopMatrix();
+        GLfloat marronc[] = { 0.6,0.3,0.2,1 };
 
-    glMaterialfv(GL_FRONT,GL_EMISSION,marrono);
-    glMaterialfv(GL_FRONT,GL_DIFFUSE,marrono);
+        glMaterialfv(GL_FRONT,GL_EMISSION,marronc);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,marronc);
+    }
 
-	//Orejas
-	 glPushMatrix();
-		glTranslatef(2.1,-0.65,0.73);
-		glScalef(1,1,0.5);
-		glRotatef(270,1,0,0);
-		glutSolidCone(0.4,2,15,15);
-	glPopMatrix();
-
-	glPushMatrix();
-		glTranslatef(2.1,-0.65,-0.73);
-		glScalef(1,1,0.5);
-        glRotatef(270,1,0,0);
-		glutSolidCone(0.4,2,15,15);
-	glPopMatrix();
+    static GLUquadric* quad = gluNewQuadric();
 
 
-	//Ojo
 
-    GLfloat blanco[] = { 1,1,1,1 };
+    //Morro
+    glPushMatrix();
+    glTranslatef(2.1,1,0);
+    glutSolidSphere(0.25,15,15);
+    glRotatef(90,0,1,0);
+    glRotatef(15,1,0,0);
+    gluCylinder(quad, 0.6, 0.15, 1.30, 15, 15);
+    glPopMatrix();
 
-    glMaterialfv(GL_FRONT,GL_EMISSION,blanco);
-    glMaterialfv(GL_FRONT,GL_DIFFUSE,blanco);
+
+    if (color) {
+
+        GLfloat amarillooscuro[]={0.5,0.5,0,1},
+                amarillosolido[]={1,1,0,1};
+        glMaterialfv(GL_FRONT,GL_EMISSION,amarillooscuro);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,amarillosolido);
+
+    } else {
+
+        GLfloat marrono[] = { 0.37,0.25,0.2,1 };
+        GLfloat rosa[] = { 0.824, 0.106, 0.325,1 };
+
+        glMaterialfv(GL_FRONT,GL_EMISSION,rosa);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,marrono);
+    }
+
+
+
+    //Nariz
+    glPushMatrix();
+    glTranslatef(3.5,0.65,0);
+    glutSolidSphere(0.175,15,15);
+    glPopMatrix();
+
+}
+
+void cgvScene3D::draw_ears( bool color ) {
+
+    if (color) {
+
+        GLfloat amarillooscuro[]={0.5,0.5,0,1},
+                amarillosolido[]={1,1,0,1};
+        glMaterialfv(GL_FRONT,GL_EMISSION,amarillooscuro);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,amarillosolido);
+
+    } else {
+
+        GLfloat marrono[] = { 0.37,0.25,0.2,1 };
+
+        glMaterialfv(GL_FRONT,GL_EMISSION,marrono);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,marrono);
+    }
+
+
+    //Orejas
+    glPushMatrix();
+    glTranslatef(2.1,-0.65,0.73);
+    glScalef(1,1,0.5);
+    glRotatef(270,1,0,0);
+    glutSolidCone(0.4,2,15,15);
+    glPopMatrix();
 
     glPushMatrix();
-		glTranslatef(2.75,1.2,-0.35);
-		glScalef(0.3,1,0.65);
-		glutSolidSphere(0.25,15,15);
-	glPopMatrix();
-
-	glPushMatrix();
-		glTranslatef(2.75,1.2,0.35);
-		glScalef(0.3,1,0.65);
-		glutSolidSphere(0.25,15,15);
-	glPopMatrix();
-
-    GLfloat negro[] = { 0,0,0,1 };
-
-    glMaterialfv(GL_FRONT,GL_EMISSION,negro);
-    glMaterialfv(GL_FRONT,GL_DIFFUSE,negro);
-
-
-    glPushMatrix();
-		glTranslatef(this->TeyeX,this->TeyeY,0.35);
-		glScalef(0.3,1,0.65);
-		glutSolidSphere(0.13,15,15);
-	glPopMatrix();
-
-	glPushMatrix();
-        glTranslatef(this->TeyeX,this->TeyeY,-0.35);
-		glScalef(0.3,1,0.65);
-		glutSolidSphere(0.13,15,15);
-	glPopMatrix();
-
+    glTranslatef(2.1,-0.65,-0.73);
+    glScalef(1,1,0.5);
+    glRotatef(270,1,0,0);
+    glutSolidCone(0.4,2,15,15);
+    glPopMatrix();
 
 }
 
 
-void cgvScene3D::draw_legs ( void ) {
+void cgvScene3D::draw_eyes( bool color, float zB ) {
+
+    if (color) {
+
+        GLfloat amarillooscuro[] = {0.5, 0.5, 0, 1},
+                amarillosolido[] = {1, 1, 0, 1};
+        glMaterialfv(GL_FRONT, GL_EMISSION, amarillooscuro);
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, amarillosolido);
+
+    } else {
+
+        GLfloat blanco[] = {1, 1, 1, 1};
+
+        glMaterialfv(GL_FRONT, GL_EMISSION, blanco);
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, blanco);
+    }
+
+    //Ojo
+
+    glPushMatrix();
+    glTranslatef(2.75, 1.2, zB);
+    glScalef(0.3, 1, 0.65);
+    glutSolidSphere(0.25, 15, 15);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(2.75, 1.2, zB);
+    glScalef(0.3, 1, 0.65);
+    glutSolidSphere(0.25, 15, 15);
+    glPopMatrix();
+
+}
+
+
+void cgvScene3D::draw_pupil( bool color ) {
+
+    if (color) {
+
+        GLfloat amarillooscuro[] = {0.5, 0.5, 0, 1},
+                amarillosolido[] = {1, 1, 0, 1};
+        glMaterialfv(GL_FRONT, GL_EMISSION, amarillooscuro);
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, amarillosolido);
+
+    } else {
+
+        GLfloat negro[] = {0, 0, 0, 1};
+
+        glMaterialfv(GL_FRONT, GL_EMISSION, negro);
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, negro);
+    }
+
+    glPushMatrix();
+    //glTranslatef(this->TeyeX,this->TeyeY,0.35);
+    glScalef(0.3, 1, 0.65);
+    glutSolidSphere(0.13, 15, 15);
+    glPopMatrix();
+}
+
+
+void cgvScene3D::draw_legs ( bool color ) {
+
+    if (color) {
+
+        GLfloat amarillooscuro[]={0.5,0.5,0,1},
+                amarillosolido[]={1,1,0,1};
+        glMaterialfv(GL_FRONT,GL_EMISSION,amarillooscuro);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,amarillosolido);
+
+    } else {
+
+        GLfloat marronc[] = { 0.44,0.25,0.2,1 };
+
+        glMaterialfv(GL_FRONT,GL_EMISSION,marronc);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,marronc);
+    }
 
 	//Patas
 	//TD
@@ -213,7 +314,6 @@ void cgvScene3D::draw_legs ( void ) {
 	glPopMatrix();
 
 
-
 	//DD
 	glPushMatrix();
 		glTranslatef(1.3,-1,0.67);
@@ -232,76 +332,99 @@ void cgvScene3D::draw_legs ( void ) {
 	glPopMatrix();
 
 
-}
+    if (color) {
 
+        GLfloat amarillooscuro[]={0.5,0.5,0,1},
+                amarillosolido[]={1,1,0,1};
+        glMaterialfv(GL_FRONT,GL_EMISSION,amarillooscuro);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,amarillosolido);
 
-void cgvScene3D::draw_feet( void ) {
+    } else {
 
-    GLfloat marrono[] = { 0.3,0.25,0.2,1 };
+        GLfloat marrono[] = { 0.3,0.25,0.2,1 };
 
-    glMaterialfv(GL_FRONT,GL_EMISSION,marrono);
-    glMaterialfv(GL_FRONT,GL_DIFFUSE,marrono);
+        glMaterialfv(GL_FRONT,GL_EMISSION,marrono);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,marrono);
+    }
+
 
     //DI
     glPushMatrix();
-        glTranslatef(1.4,-1.1,-0.67);
-        glScalef(0.95,0.2,0.47);
-        glutSolidCube(1);
+    glTranslatef(1.4,-1.1,-0.67);
+    glScalef(0.95,0.2,0.47);
+    glutSolidCube(1);
     glPopMatrix();
 
     //DD
     glPushMatrix();
-        glTranslatef(1.4,-1.1,0.67);
-        glScalef(0.95,0.2,0.47);
-        glutSolidCube(1);
+    glTranslatef(1.4,-1.1,0.67);
+    glScalef(0.95,0.2,0.47);
+    glutSolidCube(1);
     glPopMatrix();
 
 
     //TI
     glPushMatrix();
-        glTranslatef(-1.6,-1.1,-0.67);
-        glScalef(0.95,0.2,0.47);
-        glutSolidCube(1);
+    glTranslatef(-1.6,-1.1,-0.67);
+    glScalef(0.95,0.2,0.47);
+    glutSolidCube(1);
     glPopMatrix();
 
     //TD
     glPushMatrix();
-        glTranslatef(-1.6,-1.1,0.67);
-        glScalef(0.95,0.2,0.47);
-        glutSolidCube(1);
+    glTranslatef(-1.6,-1.1,0.67);
+    glScalef(0.95,0.2,0.47);
+    glutSolidCube(1);
     glPopMatrix();
-
-
 
 }
 
 
-void cgvScene3D::draw_tail ( void ) {
+void cgvScene3D::draw_tail ( bool color ) {
 
-    GLfloat marrono[] = { 0.37,0.25,0.2,1 };
+    if (color) {
 
-    glMaterialfv(GL_FRONT,GL_EMISSION,marrono);
-    glMaterialfv(GL_FRONT,GL_DIFFUSE,marrono);
+        GLfloat amarillooscuro[]={0.5,0.5,0,1},
+                amarillosolido[]={1,1,0,1};
+        glMaterialfv(GL_FRONT,GL_EMISSION,amarillooscuro);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,amarillosolido);
+
+    } else {
+
+        GLfloat marrono[] = { 0.37,0.25,0.2,1 };
+
+        glMaterialfv(GL_FRONT,GL_EMISSION,marrono);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,marrono);
+    }
 
 
 	glPushMatrix();
 		glTranslatef(-2,0,0);
 		glRotatef(this->RtailY,0,1,0);
 		glRotatef(this->RtailX,1,0,0);
-        glRotatef(this->RtailZ,1,0,0);
 		glutSolidCone(0.2,2.2,15,15);
 	glPopMatrix();
 
 
 }
 
-void cgvScene3D::draw_tongue ( void ) {
+void cgvScene3D::draw_tongue ( bool color ) {
 
-    GLfloat rosa[] = { 0.824, 0.106, 0.325,1 };
 
-    glMaterialfv(GL_FRONT,GL_EMISSION,rosa);
-    glMaterialfv(GL_FRONT,GL_DIFFUSE,rosa);
+    if (color) {
 
+        GLfloat amarillooscuro[]={0.5,0.5,0,1},
+                amarillosolido[]={1,1,0,1};
+        glMaterialfv(GL_FRONT,GL_EMISSION,amarillooscuro);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,amarillosolido);
+
+    } else {
+
+        GLfloat rosa[] = { 0.824, 0.106, 0.325,1 };
+
+        glMaterialfv(GL_FRONT,GL_EMISSION,rosa);
+        glMaterialfv(GL_FRONT,GL_DIFFUSE,rosa);
+    }
 
     glPushMatrix();
         glTranslatef(this->TtongueX, this->TtongueY, 0);
@@ -382,12 +505,7 @@ void cgvScene3D::render(void) {
 	// draw the axes
 	//if (axes) draw_axes();
 
-	draw_head();
-	draw_body();
-	draw_legs();
-    draw_feet();
-	draw_tail();
-    draw_tongue();
+
 
 
 
@@ -402,6 +520,77 @@ void cgvScene3D::render(void) {
 
 
 
+    glInitNames();
+
+    glPushMatrix();
+        glPushName(BODY);
+            draw_body(changeColor[BODY]);
+
+                glPushMatrix();
+                    glPushName(HEAD);
+                        draw_head(changeColor[HEAD]);
+
+                            glPushMatrix();
+                                glPushName(EARS);
+                                    draw_ears(changeColor[EARS]);
+                                glPopName();
+                            glPopMatrix();
+
+                            glPushMatrix();
+                                glPushName(EYE_R);
+                                    draw_eyes(changeColor[EYE_R], -0.35);
+
+                                        glPushMatrix();
+                                            glPushName(PUPIL_R);
+                                                glTranslatef(this->TeyeX,this->TeyeY,-0.35);
+                                                draw_pupil(changeColor[PUPIL_R]);
+                                            glPopName();
+                                        glPopMatrix();
+
+                                glPopName();
+                            glPopMatrix();
+
+                            glPushMatrix();
+                                glPushName(EYE_L);
+                                    draw_eyes(changeColor[EYE_L], 0.35);
+                                        glPushMatrix();
+                                            glPushName(PUPIL_L);
+                                                glTranslatef(this->TeyeX,this->TeyeY,0.35);
+                                                draw_pupil(changeColor[PUPIL_L]);
+                                            glPopName();
+                                glPopMatrix();
+                                glPopName();
+                            glPopMatrix();
+
+                            glPushMatrix();
+                                glPushName(MOUTH);
+                                    draw_mouth(changeColor[MOUTH]);
+                                glPopName();
+                            glPopMatrix();
+
+                            glPushMatrix();
+                                glPushName(MOUTH);
+                                    draw_tongue(changeColor[TONGUE]);
+                                glPopName();
+                            glPopMatrix();
+
+                    glPopName();
+                glPopMatrix();
+
+                glPushMatrix();
+                    glPushName(LEGS);
+                        draw_legs(changeColor[LEGS]);
+                    glPopName();
+                glPopMatrix();
+
+                glPushMatrix();
+                    glPushName(TAIL);
+                        draw_tail(changeColor[TAIL]);
+                    glPopName();
+                glPopMatrix();
+
+        glPopName();
+    glPopMatrix();
 
 	glPopMatrix (); // restore the modelview matrix
 

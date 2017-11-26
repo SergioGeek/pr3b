@@ -86,22 +86,21 @@ void cgvInterface::set_glutKeyboardFunc(unsigned char key, int x, int y) {
         case 'Z': // TODO: Section C: rotate negative Z
             interface.scene.rotateZ(-10);
             break;
-		case 't': //Mueve cola
-			interface.scene.rotateTail(10);
+		case 't': //Move tail
+			interface.scene.rotateTail(8);
 			break;
 
-		case 'e': //Mueve ojos
+		case 'e': //Move Eyes
 			interface.scene.rotateEyes(0.02);
 			break;
 
-		case 'l': //Mueve orejas
+		case 'l': //MoveTongue
 			interface.scene.rotateTongue(0.05);
 			break;
 
-		case 'h': //Mueve orejas
+		case 'h': //Move all
 			interface.scene.rotateAll(0.05,10,0.02);
 			break;
-
 
 
 		case 27: // Escape key to exit

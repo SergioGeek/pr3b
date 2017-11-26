@@ -9,6 +9,22 @@
 #include <GL/glut.h>
 #endif
 
+enum {
+
+    BODY,
+    LEGS,
+    HEAD,
+    EARS,
+    MOUTH,
+    EYE_R,
+    EYE_L,
+    PUPIL_R,
+    PUPIL_L,
+    TAIL,
+    TONGUE
+
+};
+
 
 class cgvScene3D {
 protected:
@@ -19,14 +35,17 @@ protected:
 	float RtailX, RtailY, RtailZ;
 	bool cambioTail;
 
-	//eyes
+	//Eyes
 	float TeyeX, TeyeY, TeyeZ;
 	bool cambioEye;
 
+    //Tongue
 	float TtongueX, TtongueY, TtongueZ;
 	bool cambioTongue;
 
 ////// Section D: add here the attribute/s to control the selected object and to color it yellow
+
+    bool changeColor[7];
 
 
 	// Additional attributes
@@ -51,12 +70,15 @@ public:
     void rotateZ(const float& angle);
 
 	////// Section B: include here the methods to modify the degrees of freedom of the model
-	void draw_body ( void );
-	void draw_head ( void );
-	void draw_legs ( void );
-	void draw_feet( void );
-	void draw_tail ( void );
-	void draw_tongue ( void );
+	void draw_body (  bool color );
+	void draw_head ( bool color );
+    void draw_ears ( bool color );
+    void draw_eyes ( bool color, float zB );
+    void draw_pupil ( bool color );
+    void draw_mouth ( bool color );
+	void draw_legs ( bool color );
+	void draw_tail ( bool color );
+	void draw_tongue ( bool color );
 
 	void rotateTail ( float aux );
 	void rotateEyes ( float aux );
