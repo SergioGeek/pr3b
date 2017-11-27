@@ -485,6 +485,12 @@ void cgvScene3D::rotateAll( float auxTo, float auxTa, float auxE ) {
     this->rotateTail(auxTa);
 }
 
+void cgvScene3D::setYellow(const int &n, const bool &b) {
+
+    this->changeColor[n] = b;
+
+}
+
 
 
 void cgvScene3D::render(void) {

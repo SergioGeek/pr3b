@@ -134,6 +134,7 @@ void cgvInterface::set_glutDisplayFunc() {
 
 	// Section D: check the mode before applying the camera and projection transformations,
 	if (interface.mode == CGV_SELECT) {
+        interface.scene.setYellow(interface.selected_object, false);
 		// Section D: if it is in the OpenGL selection mode pass the corresponding parameters to the camera
 		interface.init_selection(1024,impact_list);
 	}
@@ -146,6 +147,7 @@ void cgvInterface::set_glutDisplayFunc() {
 	if (interface.mode == CGV_SELECT) {
 		// Section D: exit the selection mode and process the list of impacts
 		interface.finish_selection(1024,impact_list);
+        interface.scene.setYellow(interface.selected_object, true);
 		glutPostRedisplay();
 	}	else {
 		// refresh the window
@@ -157,11 +159,15 @@ void cgvInterface::set_glutDisplayFunc() {
 void cgvInterface::set_glutMouseFunc(GLint button,GLint state,GLint x,GLint y) {
 
 // TODO: Section D: check if the left button of the mouse has been clicked. See glutMouseFunc for details.
-
+    if ( button == GLUT_LEFT_BUTTON) {
 // Section D: Store the button that has been pressed or released. If it has been clicked, then change to selection mode (CGV_SELECT)
-
+        interface.pressed_button = (state == GLUT_DOWN);
+        if (interface.pressed_button)
+            interface.mode = CGV_SELECT;
 // Section D: Save the position of the pixel when the mouse was clicked
-
+        interface.cursorX = x;
+        interface.cursorY = y;
+    }
 
 	glutPostRedisplay();
 
@@ -190,11 +196,15 @@ void cgvInterface::init_callbacks() {
 }
 
 void cgvInterface::init_selection(int SIZE_IMPACT_LIST, GLuint *impact_list) {
-	// TODO: Section D: select the variable where the impacts will be stored. Use glSelectBuffer
-	// Section D: Change to the OpenGL selection mode. See function glRenderMode
-	// Section D: set the camera to selection mode with the required parameters to apply it
-	// including the height and width of the selection area.
+    // TODO: Section D: select the variable where the impacts will be stored. Use glSelectBuffer
+	glSelectBuffer(SIZE_IMPACT_LIST, impact_list);
+    // Section D: Change to the OpenGL selection mode. See function glRenderMode
+	glRenderMode(GL_SELECT);
+    // Section D: set the camera to selection mode with the required parameters to apply it
+    // including the height and width of the selection area.
 	// Prove several alternatives to test the right size of this small area.
+
+    camera.setSelection(1,1,cursorX,cursorY);
 
 
 }
@@ -206,9 +216,22 @@ int process_impacts(int num_impacts, GLuint *impact_list) {
 	// save the nearer to the observer (minimum Z)
 	// At the beginning consider that minimum Z has a value of 0xffffffff (the maximum value represented by type GLuint)
 
+    GLuint zMinimun = 0xffffffff;
+    int pos = 0, possible_impact = -1;
+    for (int i = 0; i < num_impacts; ++i) {
+        if (impact_list[pos + 1] < zMinimun) {
+            zMinimun = impact_list[pos + 1];
+            possible_impact = pos;
+        }
+        pos = pos + 3 + impact_list[pos];
+    }
 
 	// Section D: From the information of the impact with a minimum Z, return the code corresponding to this object: as the scene
 	// is not saved in any data structure, to return the selected object use the names directly assigned to the objects
+
+    if (impact_list[possible_impact] > 0) {
+        return impact_list[possible_impact + 2 + impact_list[possible_impact]];
+    }
 
 	return -1;
 }
@@ -218,11 +241,21 @@ void cgvInterface::finish_selection(int SIZE_IMPACT_LIST, GLuint *impact_list) {
 	// TODO
 	// Section D: Change to the OpenGL visualization mode and get the number of impacts
 
+    int impactsNumber = glRenderMode(GL_RENDER);
 	// Section D: if there are impacts, process them with the function process_impacts(int num_impacts, GLuint *impact_list);
 	// obtaining the selected object, if any
 
+    if (impactsNumber > 0)
+
+        selected_object = process_impacts(impactsNumber, impact_list);
+
+    else
+        selected_object = -1;
 	// Section D: the selection has finished, change to normal visualization
+    interface.mode = CGV_VISUALIZE;
 
 	// Section D: set up the camera with the parameters of the visualization mode
+
+    camera.setVisualization();
 
 }

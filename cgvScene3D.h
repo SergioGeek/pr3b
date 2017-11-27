@@ -87,6 +87,8 @@ public:
 
 	////// Section D: include here the method/s to indicate the selected object
 
+    void setYellow ( const int& n, const bool& b);
+
 	bool get_axes() {return axes;};
 	void set_axes(bool _axes){axes = _axes;};
 };
